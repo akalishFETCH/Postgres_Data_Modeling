@@ -7,6 +7,10 @@ import numpy as np
 
 
 def process_song_file(cur, filepath):
+    """ Reads song file JSON into Pandas DB
+        Filters DB to song data and inserts into song DB using TABLE INSERT
+        Filters DB to song data and inserts into artist DB using TABLE INSERT"""
+        
     # open song file
     df = pd.read_json(filepath, typ='Series')
     
@@ -20,6 +24,13 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """ Reads log file JSON into Pandas DB
+        Filter to actions "NEXT SONG" only
+        Convert timestamp to datetime
+        Creates a time DataFrame and inserts into time DB using TABLE INSERT
+        Creates a user DataFrame and inserts into user DB using TABLE INSERT
+        Creates a songplay DataFrame and inserts into using DB using TABLE INSERT"""
+    
     # open log file
     df = pd.read_json(filepath, lines=True)
     # filter by NextSong action
@@ -61,6 +72,9 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """ Loop through folders to get all files in selected directory
+        iterate over files and use process log/song file function to move data to relevant tabl"""
+    
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -80,6 +94,8 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """Execute functions in file"""
+    
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
