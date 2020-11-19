@@ -60,7 +60,6 @@ def process_log_file(cur, filepath):
         # get songid and artistid from song and artist tables
         cur.execute(song_select, (row.song, row.artist, row.length))
         results = cur.fetchone()
-        
         if results:
             songid, artistid = results
         else:
@@ -69,7 +68,6 @@ def process_log_file(cur, filepath):
         # insert songplay record
         songplay_data = (index, row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
-
 
 def process_data(cur, conn, filepath, func):
     """ Loop through folders to get all files in selected directory
@@ -97,6 +95,7 @@ def main():
     """Execute functions in file"""
     
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
+    conn.set_session(autocommit=True)
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
