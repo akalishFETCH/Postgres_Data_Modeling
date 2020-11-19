@@ -18,13 +18,13 @@ time_table_drop = """
 songplay_table_create = ("""
                             CREATE TABLE IF NOT EXISTS songplays
                                 (
-                                    songplay_id varchar PRIMARY KEY
+                                    songplay_id integer PRIMARY KEY
                                     ,start_time varchar
-                                    ,user_id varchar
+                                    ,user_id integer NOT NULL
                                     ,level varchar
-                                    ,song_id varchar
-                                    ,artist_id varchar
-                                    ,session_id varchar
+                                    ,song_id integer NOT NULL
+                                    ,artist_id integer NOT NULL
+                                    ,session_id integer NOT NULL
                                     ,location varchar
                                     ,user_agent varchar
                                 );
@@ -32,7 +32,7 @@ songplay_table_create = ("""
 user_table_create = ("""
                         CREATE TABLE IF NOT EXISTS users 
                                 (
-                                    user_id varchar PRIMARY KEY 
+                                    user_id integer PRIMARY KEY 
                                     ,first_name varchar
                                     ,last_name varchar
                                     ,gender varchar
@@ -42,9 +42,9 @@ user_table_create = ("""
 song_table_create = ("""
                         CREATE TABLE IF NOT EXISTS songs 
                                 (
-                                    song_id varchar PRIMARY KEY
+                                    song_id integer PRIMARY KEY
                                     ,title varchar
-                                    ,artist_id varchar
+                                    ,artist_id varchar NOT NULL
                                     ,year varchar
                                     ,duration varchar
                                 );
@@ -52,7 +52,7 @@ song_table_create = ("""
 artist_table_create = ("""
                           CREATE TABLE IF NOT EXISTS artists
                                 (
-                                    artist_id varchar PRIMARY KEY
+                                    artist_id integer PRIMARY KEY
                                     ,name varchar
                                     ,location varchar
                                     ,latitude varchar
