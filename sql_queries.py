@@ -19,12 +19,12 @@ songplay_table_create = ("""
                             CREATE TABLE IF NOT EXISTS songplays
                                 (
                                     songplay_id SERIAL PRIMARY KEY
-                                    ,start_time text NOT NULL
+                                    ,start_time bigint NOT NULL
                                     ,user_id text NOT NULL
                                     ,level text
                                     ,song_id text 
                                     ,artist_id text 
-                                    ,session_id text 
+                                    ,session_id int 
                                     ,location text
                                     ,user_agent text
                                 );
@@ -44,8 +44,8 @@ song_table_create = ("""
                                 (
                                     song_id text PRIMARY KEY
                                     ,title text
-                                    ,artist_id text NOT NULL
-                                    ,year numeric
+                                    ,artist_id text
+                                    ,year int
                                     ,duration numeric
                                 );
                     """)
@@ -62,21 +62,20 @@ artist_table_create = ("""
 time_table_create = ("""
                         CREATE TABLE IF NOT EXISTS time 
                                 (
-                                    start_time text PRIMARY KEY
-                                    ,hour numeric
-                                    ,day numeric
-                                    ,week numeric
-                                    ,month numeric
-                                    ,year numeric
-                                    ,weekday numeric
+                                    start_time bigint PRIMARY KEY
+                                    ,hour int
+                                    ,day int
+                                    ,week int
+                                    ,month text
+                                    ,year int
+                                    ,weekday text
                                 );
                     """)
 # INSERT RECORDS
 songplay_table_insert = ("""
                             INSERT INTO songplays                         
                                     (
-                                        songplay_id
-                                        ,start_time
+                                        start_time
                                         ,user_id
                                         ,level
                                         ,song_id
@@ -85,8 +84,7 @@ songplay_table_insert = ("""
                                         ,location
                                         ,user_agent
                                     )
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                            ON CONFLICT (songplay_id) DO NOTHING 
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                         """)
 user_table_insert = ("""
                         INSERT INTO users 
